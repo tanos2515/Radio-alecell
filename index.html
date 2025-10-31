@@ -2,27 +2,340 @@
 <html lang="es-AR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Radio Alecell - Pilar</title>
-    <link rel="manifest" href="data:application/manifest+json,{\"name\":\"Radio Alecell Pilar\",\"short_name\":\"Alecell\",\"start_url\":\".\",\"display\":\"standalone\",\"background_color\":\"#000\",\"theme_color\":\"#00ff00\",\"icons\":[{\"src\":\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%2300ff00' rx='38'/%3E%3Ctext x='96' y='125' font-family='Arial' font-weight='bold' font-size='50' fill='%23000' text-anchor='middle'%3EALECELL%3C/text%3E%3C/svg%3E\",\"sizes\":\"192x192\",\"type\":\"image/svg+xml\"}]}">
+    <link rel="manifest" href="data:application/manifest+json,{
+        \"name\": \"Radio Alecell Pilar\",
+        \"short_name\": \"Alecell\",
+        \"start_url\": \".\",
+        \"display\": \"standalone\",
+        \"background_color\": \"#000\",
+        \"theme_color\": \"#00ff00\",
+        \"icons\": [
+            {\"src\": \"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%2300ff00' rx='38'/%3E%3Ctext x='96' y='125' font-family='Arial' font-weight='bold' font-size='50' fill='%23000' text-anchor='middle'%3EALECELL%3C/text%3E%3C/svg%3E\", \"sizes\": \"192x192\", \"type\": \"image/svg+xml\"}
+        ]
+    }">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}body{background:#000;overflow:hidden;height:100vh;display:flex;justify-content:center;align-items:center;font-family:'Courier New',monospace;color:#00ff00}canvas{position:absolute;top:0;left:0;z-index:1}.caja{position:relative;z-index:10;text-align:center;padding:25px 18px;border:4px solid #00ff00;border-radius:16px;background:rgba(0,0,0,.88);box-shadow:0 0 45px #00ff00,inset 0 0 28px #00ff00;max-width:95%;backdrop-filter:blur(7px)}.titulo{font-size:1.6em;margin-bottom:10px;text-shadow:0 0 12px #00ff00;font-weight:bold}.reloj{font-size:5em;font-weight:bold;letter-spacing:6px;text-shadow:0 0 15px #00ff00,0 0 30px #00ff00;animation:latir 1.6s infinite}@keyframes latir{0%,100%{text-shadow:0 0 15px #00ff00,0 0 30px #00ff00}50%{text-shadow:0 0 25px #00ff00,0 0 50px #00ff00}}.fecha{font-size:1.2em;margin:8px 0;opacity:.9;font-style:italic}.clima{margin:18px 0;padding:14px;border:2px solid #00ff00;border-radius:10px;background:rgba(0,255,0,.1)}.clima-actual{font-size:1.1em;margin-bottom:8px;text-shadow:0 0 8px #00ff00}.pronostico{display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px}.dia{text-align:center;padding:6px;border:1px solid #00ff00;border-radius:6px;min-width:58px;font-size:.85em}.dia-lluvia{background:rgba(0,0,255,.25);border-color:#00f;color:#0ff}.icono-clima{font-size:1.8em}.radio{margin:20px 0;padding:16px;border:3px solid #00ff00;border-radius:14px;background:rgba(0,255,0,.15)}.radio-titulo{font-size:1.5em;margin-bottom:5px;text-shadow:0 0 10px #00ff00;font-weight:bold}.en-vivo{display:inline-block;margin-bottom:8px;font-size:.9em;color:#ff0000;text-shadow:0 0 8px #ff0000;animation:parpadear 1.5s infinite}@keyframes parpadear{0%,100%{opacity:1}50%{opacity:.3}}.en-vivo::before{content:"● ";color:#ff0000;font-size:1.2em;animation:luz 1.5s infinite}@keyframes luz{0%,100%{text-shadow:0 0 8px #ff0000}50%{text-shadow:0 0 16px #ff0000}}.cambiar-btn{padding:8px 20px;background:transparent;color:#00ff00;border:2px solid #00ff00;border-radius:8px;cursor:pointer;font-weight:bold;font-size:.85em;margin-bottom:8px;box-shadow:0 0 12px #00ff00;transition:.3s}.cambiar-btn:hover{background:#00ff0030;box-shadow:0 0 25px #00ff00;transform:scale(1.05)}.estaciones{display:none;flex-direction:column;gap:6px;margin-top:8px;max-height:120px;overflow-y:auto;padding:6px;background:rgba(0,0,0,.4);border-radius:8px}.estacion{padding:6px;background:transparent;color:#00ff00;border:1px solid #00ff00;border-radius:6px;cursor:pointer;font-size:.8em;text-align:left;transition:.2s}.estacion:hover,.estacion.activa{background:#00ff0030;box-shadow:0 0 15px #00ff00}audio{width:100%;height:40px;margin:8px 0}.controles{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;flex-wrap:wrap}.btn-radio{padding:10px 28px;background:transparent;color:#00ff00;border:2px solid #00ff00;border-radius:8px;cursor:pointer;font-weight:bold;font-size:1em;box-shadow:0 0 12px #00ff00;transition:all .3s}.btn-radio:hover,.btn-radio.vivo{background:#00ff0030;box-shadow:0 0 25px #00ff00;transform:scale(1.05)}.mute-btn{padding:6px 10px;background:transparent;color:#00ff00;border:1px solid #00ff00;border-radius:6px;cursor:pointer;font-size:.8em}.volumen{width:90px}.crono{font-size:2.8em;margin:15px 0 10px;text-shadow:0 0 12px #00ff00}.vueltas{max-height:60px;overflow-y:auto;margin:8px 0;font-size:.8em;color:#00cc00;text-align:left;padding:0 8px;background:rgba(0,0,0,.3);border-radius:6px}.botones{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}button{padding:8px 16px;background:transparent;color:#00ff00;border:1px solid #00ff00;border-radius:6px;cursor:pointer;font-weight:bold;font-size:.8em;transition:.3s;box-shadow:0 0 10px #00ff00}button:hover{background:#00ff0030;box-shadow:0 0 20px #00ff00;transform:scale(1.05)}.tic-tac{position:absolute;top:10px;right:10px;font-size:.9em;cursor:pointer;z-index:100;background:rgba(0,0,0,.8);padding:5px 10px;border-radius:6px;border:1px solid #00ff00;box-shadow:0 0 8px #00ff00}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #000;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        canvas { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            z-index: 1; 
+        }
+
+        .caja {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 25px 18px;
+            border: 4px solid #00ff00;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.88);
+            box-shadow: 0 0 45px #00ff00, inset 0 0 28px #00ff00;
+            max-width: 95%;
+            backdrop-filter: blur(7px);
+        }
+
+        .titulo {
+            font-size: 1.6em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 12px #00ff00;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+        }
+
+        .reloj {
+            font-size: 5em;
+            font-weight: bold;
+            letter-spacing: 6px;
+            text-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00;
+            animation: latir 1.6s infinite;
+        }
+
+        @keyframes latir {
+            0%, 100% { text-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00; }
+            50% { text-shadow: 0 0 25px #00ff00, 0 0 50px #00ff00; }
+        }
+
+        .fecha {
+            font-size: 1.2em;
+            margin: 8px 0;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* CLIMA DE PILAR (SIN API) */
+        .clima {
+            margin: 18px 0;
+            padding: 14px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .clima-actual {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            text-shadow: 0 0 8px #00ff00;
+        }
+
+        .pronostico {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .dia {
+            text-align: center;
+            padding: 6px;
+            border: 1px solid #00ff00;
+            border-radius: 6px;
+            min-width: 58px;
+            font-size: 0.85em;
+        }
+
+        .dia-lluvia {
+            background: rgba(0, 0, 255, 0.25);
+            border-color: #00f;
+            color: #0ff;
+            box-shadow: 0 0 12px #00f;
+        }
+
+        .icono-clima { font-size: 1.8em; }
+
+        .radio {
+            margin: 20px 0;
+            padding: 16px;
+            border: 3px solid #00ff00;
+            border-radius: 14px;
+            background: rgba(0, 255, 0, 0.15);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+        }
+
+        .radio-titulo {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px #00ff00;
+            font-weight: bold;
+        }
+
+        .en-vivo {
+            display: inline-block;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #ff0000;
+            text-shadow: 0 0 8px #ff0000;
+            animation: parpadear 1.5s infinite;
+        }
+
+        @keyframes parpadear {
+            0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+        }
+
+        .en-vivo::before {
+            content: "● "; color: #ff0000; font-size: 1.2em;
+            animation: luz 1.5s infinite;
+        }
+
+        @keyframes luz {
+            0%, 100% { text-shadow: 0 0 8px #ff0000; }
+            50% { text-shadow: 0 0 16px #ff0000; }
+        }
+
+        .cambiar-btn {
+            padding: 8px 20px;
+            background: transparent;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+            box-shadow: 0 0 12px #00ff00;
+            transition: 0.3s;
+        }
+
+        .cambiar-btn:hover {
+            background: #00ff0030;
+            box-shadow: 0 0 25px #00ff00;
+            transform: scale(1.05);
+        }
+
+        .estaciones {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 8px;
+            max-height: 120px;
+            overflow-y: auto;
+            padding: 6px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 8px;
+        }
+
+        .estacion {
+            padding: 6px;
+            background: transparent;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8em;
+            text-align: left;
+            transition: 0.2s;
+        }
+
+        .estacion:hover, .estacion.activa {
+            background: #00ff0030;
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        audio {
+            width: 100%;
+            height: 40px;
+            margin: 8px 0;
+        }
+
+        .controles {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-radio {
+            padding: 10px 28px;
+            background: transparent;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            box-shadow: 0 0 12px #00ff00;
+            transition: all 0.3s;
+        }
+
+        .btn-radio:hover, .btn-radio.vivo {
+            background: #00ff0030;
+            box-shadow: 0 0 25px #00ff00;
+            transform: scale(1.05);
+        }
+
+        .mute-btn {
+            padding: 6px 10px;
+            background: transparent;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .volumen {
+            width: 90px;
+        }
+
+        .crono {
+            font-size: 2.8em;
+            margin: 15px 0 10px;
+            text-shadow: 0 0 12px #00ff00;
+        }
+
+        .vueltas {
+            max-height: 60px;
+            overflow-y: auto;
+            margin: 8px 0;
+            font-size: 0.8em;
+            color: #00cc00;
+            text-align: left;
+            padding: 0 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 6px;
+        }
+
+        .botones {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background: transparent;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8em;
+            transition: 0.3s;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        button:hover {
+            background: #00ff0030;
+            box-shadow: 0 0 20px #00ff00;
+            transform: scale(1.05);
+        }
+
+        .tic-tac {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.9em;
+            cursor: pointer;
+            z-index: 100;
+            background: rgba(0,0,0,0.8);
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 8px #00ff00;
+        }
     </style>
 </head>
 <body>
     <canvas id="matrix"></canvas>
+
     <div class="tic-tac" id="ticTacBtn">TIC-TAC ON</div>
+
     <div class="caja">
         <div class="titulo">RADIO ALECELL - PILAR</div>
+
         <div class="reloj" id="reloj">00:00:00</div>
         <div class="fecha" id="fecha"></div>
+
+        <!-- CLIMA DE PILAR (SIN INTERNET) -->
         <div class="clima">
             <div class="clima-actual" id="climaActual">Cargando...</div>
             <div class="pronostico" id="pronostico"></div>
         </div>
+
         <div class="radio">
             <div class="radio-titulo" id="nombreEstacion">Radio Alecell</div>
-            <div class="en-vivo" id="enVivo" style="display:none">EN VIVO</div>
+            
+            <div class="en-vivo" id="enVivo" style="display: none;">EN VIVO</div>
+
             <button class="cambiar-btn" id="cambiarBtn">CAMBIAR EMISORA</button>
             <div class="estaciones" id="estaciones">
                 <div class="estacion activa" data-url="http://cdn.instream.audio:9288/stream" data-nombre="Radio Alecell">Radio Alecell</div>
@@ -30,15 +343,19 @@
                 <div class="estacion" data-url="http://playerservices.streamtheworld.com/api/livestream-redirect/RADIOMITRE.mp3" data-nombre="Radio Mitre">Radio Mitre</div>
                 <div class="estacion" data-url="http://stream.zeno.fm/0r0xaqc0wzzuv" data-nombre="Cadena 3">Cadena 3</div>
             </div>
+
             <audio id="radio" controls preload="auto"></audio>
+
             <div class="controles">
                 <button class="btn-radio" id="playRadio">PRENDER</button>
                 <button class="mute-btn" id="muteBtn">MUTE</button>
                 <input type="range" class="volumen" id="volumen" min="0" max="100" value="70">
             </div>
         </div>
+
         <div class="crono" id="crono">00:00:00</div>
         <div class="vueltas" id="vueltas"></div>
+
         <div class="botones">
             <button id="empezar">EMPEZAR</button>
             <button id="parar">PARAR</button>
@@ -48,10 +365,179 @@
     </div>
 
     <script>
-        const emisoras=[{url:"http://cdn.instream.audio:9288/stream",nombre:"Radio Alecell"},{url:"http://playerservices.streamtheworld.com/api/livestream-redirect/LA100.mp3",nombre:"La 100"},{url:"http://playerservices.streamtheworld.com/api/livestream-redirect/RADIOMITRE.mp3",nombre:"Radio Mitre"},{url:"http://stream.zeno.fm/0r0xaqc0wzzuv",nombre:"Cadena 3"}];
-        const radio=document.getElementById('radio'),playBtn=document.getElementById('playRadio'),nombreEstacion=document.getElementById('nombreEstacion'),enVivo=document.getElementById('enVivo'),cambiarBtn=document.getElementById('cambiarBtn'),estacionesDiv=document.getElementById('estaciones'),estaciones=document.querySelectorAll('.estacion');let actual=0;function cargarEmisora(i){actual=i;const e=emisoras[i];radio.src=e.url;nombreEstacion.textContent=e.nombre;estaciones.forEach((el,idx)=>el.classList.toggle('activa',idx===i));if(!radio.paused)radio.load()}cambiarBtn.onclick=()=>{estacionesDiv.style.display=estacionesDiv.style.display==='flex'?'none':'flex'};estaciones.forEach((el,i)=>{el.onclick=()=>{cargarEmisora(i);estacionesDiv.style.display='none';playBtn.textContent="PRENDER";playBtn.classList.remove('vivo');enVivo.style.display='none';radio.pause()}});playBtn.onclick=()=>{if(radio.paused){radio.play().then(()=>{playBtn.textContent="EN VIVO";playBtn.classList.add('vivo');enVivo.style.display='inline-block'}).catch(()=>alert("Sin internet"))}else{radio.pause();playBtn.textContent="PRENDER";playBtn.classList.remove('vivo');enVivo.style.display='none'}};document.getElementById('volumen').oninput=e=>radio.volume=e.target.value/100;document.getElementById('muteBtn').onclick=()=>{radio.muted=!radio.muted;document.getElementById('muteBtn').textContent=radio.muted?"SONIDO":"MUTE"};
-        const climaPilar={actual:{temp:15,icon:'Clouds',desc:'Nubes dispersas',humedad:82,viento:'3 m/s NE'},pronostico:[{dia:'VIE',max:23,min:15,icon:'Clouds',lluvia:20},{dia:'SÁB',max:22,min:15,icon:'Rain',lluvia:60},{dia:'DOM',max:19,min:14,icon:'Clear',lluvia:10},{dia:'LUN',max:21,min:15,icon:'Rain',lluvia:40},{dia:'MAR',max:23,min:17,icon:'Clouds',lluvia:25}]};function mostrarClima(){const actual=climaPilar.actual;const emoji=actual.icon==='Clear'?'Sunny':actual.icon==='Rain'?'Rainy':'Cloudy';document.getElementById('climaActual').innerHTML=`${emoji} ${actual.temp}°C ${actual.desc}<br>Hum: ${actual.humedad}% | V: ${actual.viento}`;const pronostico=document.getElementById('pronostico');pronostico.innerHTML='';climaPilar.pronostico.forEach(d=>{const emoji=d.icon==='Clear'?'Sunny':d.icon==='Rain'?'Rainy':'Cloudy';const div=document.createElement('div');div.className=`dia ${d.lluvia>30?'dia-lluvia':''}`;div.innerHTML=`<div>${d.dia}</div><div class="icono-clima">${emoji}</div><div>${d.max}°/${d.min}°</div><div>${d.lluvia}%</div>`;pronostico.appendChild(div)})};setInterval(mostrarClima,600000);mostrarClima();
-        const canvas=document.getElementById('matrix'),ctx=canvas.getContext('2d');let w=canvas.width=window.innerWidth,h=canvas.height=window.innerHeight;const cols=Math.floor(w/20)+1,ypos=Array(cols).fill(0);function matrixRain(){ctx.fillStyle='rgba(0,0,0,0.04)';ctx.fillRect(0,0,w,h);ctx.fillStyle='#00ff00';ctx.font='15pt monospace';ypos.forEach((y,ind)=>{const text=String.fromCharCode(0x30A0+Math.random()*96);const x=ind*20;ctx.fillText(text,x,y);if(y>100+Math.random()*10000)ypos[ind]=0;else ypos[ind]=y+20})};setInterval(matrixRain,50);window.onresize=()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight};
-        function reloj(){const now=new Date().toLocaleString("en-US",{timeZone:"America/Argentina/Buenos_Aires"});const fecha=new Date(now);const h=fecha.getHours().toString().padStart(2,'0'),m=fecha.getMinutes().toString().padStart(2,'0'),s=fecha.getSeconds().toString().padStart(2,'0');document.getElementById('reloj').textContent=`${h}:${m}:${s}`;document.getElementById('fecha').textContent=fecha.toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'}).toUpperCase()};setInterval(reloj,1000);reloj();
-        const tic=new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwF');let ticOn=true;document.getElementById('ticTacBtn').onclick=()=>{ticOn=!ticOn;document.getElementById('ticTacBtn').textContent=ticOn?"TIC-TAC ON":"TIC-TAC OFF"};setInterval(()=>{ticOn&&tic.play().catch(()=>{})},1000);
-        let start,timer,elapsed=0,laps=[];const crono=document.getElementById('crono'),lapsDiv=document.getElementById('vueltas');function format(ms){const s=Math.floor(ms/1000)%60,m=Math.floor(ms/60000)%60,cs=Math.floor((ms%1000)/10);return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}:${cs.toString().padStart(2,'0')
+        // === EMISORAS ===
+        const emisoras = [
+            { url: "http://cdn.instream.audio:9288/stream", nombre: "Radio Alecell" },
+            { url: "http://playerservices.streamtheworld.com/api/livestream-redirect/LA100.mp3", nombre: "La 100" },
+            { url: "http://playerservices.streamtheworld.com/api/livestream-redirect/RADIOMITRE.mp3", nombre: "Radio Mitre" },
+            { url: "http://stream.zeno.fm/0r0xaqc0wzzuv", nombre: "Cadena 3" }
+        ];
+
+        const radio = document.getElementById('radio');
+        const playBtn = document.getElementById('playRadio');
+        const nombreEstacion = document.getElementById('nombreEstacion');
+        const enVivo = document.getElementById('enVivo');
+        const cambiarBtn = document.getElementById('cambiarBtn');
+        const estacionesDiv = document.getElementById('estaciones');
+        const estaciones = document.querySelectorAll('.estacion');
+
+        let actual = 0;
+
+        function cargarEmisora(i) {
+            actual = i;
+            const e = emisoras[i];
+            radio.src = e.url;
+            nombreEstacion.textContent = e.nombre;
+            estaciones.forEach((el, idx) => el.classList.toggle('activa', idx === i));
+            if (!radio.paused) radio.load();
+        }
+
+        cambiarBtn.onclick = () => {
+            estacionesDiv.style.display = estacionesDiv.style.display === 'flex' ? 'none' : 'flex';
+        };
+
+        estaciones.forEach((el, i) => {
+            el.onclick = () => {
+                cargarEmisora(i);
+                estacionesDiv.style.display = 'none';
+                playBtn.textContent = "PRENDER";
+                playBtn.classList.remove('vivo');
+                enVivo.style.display = 'none';
+                radio.pause();
+            };
+        });
+
+        playBtn.onclick = () => {
+            if (radio.paused) {
+                radio.play().then(() => {
+                    playBtn.textContent = "EN VIVO";
+                    playBtn.classList.add('vivo');
+                    enVivo.style.display = 'inline-block';
+                }).catch(() => alert("Sin internet para la radio"));
+            } else {
+                radio.pause();
+                playBtn.textContent = "PRENDER";
+                playBtn.classList.remove('vivo');
+                enVivo.style.display = 'none';
+            }
+        };
+
+        document.getElementById('volumen').oninput = e => radio.volume = e.target.value / 100;
+        document.getElementById('muteBtn').onclick = () => {
+            radio.muted = !radio.muted;
+            document.getElementById('muteBtn').textContent = radio.muted ? "SONIDO" : "MUTE";
+        };
+
+        // === CLIMA DE PILAR (SIN INTERNET - DATOS REALES SIMULADOS) ===
+        const climaPilar = {
+            actual: { temp: 13, icon: '☁️', desc: 'Nubes dispersas', humedad: 84, viento: '10 km/h SO' },
+            pronostico: [
+                { dia: 'VIE', max: 20, min: 13, icon: '☁️', lluvia: 20 },
+                { dia: 'SÁB', max: 22, min: 15, icon: 'Rain', lluvia: 60 },
+                { dia: 'DOM', max: 19, min: 14, icon: 'Clear', lluvia: 10 },
+                { dia: 'LUN', max: 21, min: 15, icon: 'Rain', lluvia: 40 },
+                { dia: 'MAR', max: 23, min: 17, icon: '☁️', lluvia: 25 }
+            ]
+        };
+
+        function mostrarClima() {
+            const actual = climaPilar.actual;
+            const lluviaActual = actual.desc.includes('lluvia') ? 'Rain' : '';
+            document.getElementById('climaActual').innerHTML = `${actual.icon} ${actual.temp}°C ${lluviaActual} ${actual.desc}<br>Hum: ${actual.humedad}% | V: ${actual.viento}`;
+
+            const pronostico = document.getElementById('pronostico');
+            pronostico.innerHTML = '';
+            climaPilar.pronostico.forEach(d => {
+                const emoji = d.icon === 'Clear' ? 'Clear' : d.icon === 'Rain' ? 'Rain' : '☁️';
+                const div = document.createElement('div');
+                div.className = `dia ${d.lluvia > 30 ? 'dia-lluvia' : ''}`;
+                div.innerHTML = `<div>${d.dia}</div><div class="icono-clima">${emoji}</div><div>${d.max}°/${d.min}°</div><div>${d.lluvia}%</div>`;
+                pronostico.appendChild(div);
+            });
+        }
+
+        // Actualiza cada 10 min (simulado)
+        setInterval(mostrarClima, 600000);
+        mostrarClima();
+
+        // === LLUVIA MATRIX (PERFECTA) ===
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+        const cols = Math.floor(w / 20) + 1;
+        const ypos = Array(cols).fill(0);
+
+        function matrixRain() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+            ctx.fillRect(0, 0, w, h);
+            ctx.fillStyle = '#00ff00';
+            ctx.font = '15pt monospace';
+
+            ypos.forEach((y, ind) => {
+                const text = String.fromCharCode(0x30A0 + Math.random() * 96);
+                const x = ind * 20;
+                ctx.fillText(text, x, y);
+                if (y > 100 + Math.random() * 10000) ypos[ind] = 0;
+                else ypos[ind] = y + 20;
+            });
+        }
+
+        setInterval(matrixRain, 50);
+        window.onresize = () => {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        };
+
+        // === HORA ARGENTINA ===
+        function reloj() {
+            const now = new Date().toLocaleString("en-US", { timeZone: "America/Argentina/Buenos_Aires" });
+            const fecha = new Date(now);
+            const h = fecha.getHours().toString().padStart(2, '0');
+            const m = fecha.getMinutes().toString().padStart(2, '0');
+            const s = fecha.getSeconds().toString().padStart(2, '0');
+            document.getElementById('reloj').textContent = `${h}:${m}:${s}`;
+            document.getElementById('fecha').textContent = fecha.toLocaleDateString('es-AR', { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
+        }
+        setInterval(reloj, 1000);
+        reloj();
+
+        // === TIC-TAC ===
+        const tic = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwF');
+        let ticOn = true;
+        document.getElementById('ticTacBtn').onclick = () => {
+            ticOn = !ticOn;
+            document.getElementById('ticTacBtn').textContent = ticOn ? "TIC-TAC ON" : "TIC-TAC OFF";
+        };
+        setInterval(() => ticOn && tic.play().catch(() => {}), 1000);
+
+        // === CRONÓMETRO ===
+        let start, timer, elapsed = 0, laps = [];
+        const crono = document.getElementById('crono');
+        const lapsDiv = document.getElementById('vueltas');
+
+        function format(ms) {
+            const s = Math.floor(ms / 1000) % 60;
+            const m = Math.floor(ms / 60000) % 60;
+            const cs = Math.floor((ms % 1000) / 10);
+            return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}:${cs.toString().padStart(2,'0')}`;
+        }
+
+        function update() {
+            if (start) elapsed = Date.now() - start;
+            crono.textContent = format(elapsed);
+        }
+
+        document.getElementById('empezar').onclick = () => { if (!start) { start = Date.now() - elapsed; timer = setInterval(update, 10); } };
+        document.getElementById('parar').onclick = () => { if (start) { clearInterval(timer); start = null; } };
+        document.getElementById('vuelta').onclick = () => { if (start) { laps.push(elapsed); const d = document.createElement('div'); d.textContent = `Vuelta ${laps.length}: ${format(elapsed)}`; lapsDiv.prepend(d); } };
+        document.getElementById('resetear').onclick = () => { clearInterval(timer); start = null; elapsed = 0; laps = []; update(); lapsDiv.innerHTML = ''; };
+
+        setInterval(update, 10);
+        update();
+
+        // Iniciar
+        cargarEmisora(0);
+    </script>
+</body>
+</html>
